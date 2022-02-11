@@ -60,7 +60,6 @@ for (x in 1:50){
 }
 
 
-
 ##### Reading in virtual species ######
 
 # Get the map files.
@@ -72,12 +71,6 @@ virtual_folders <- c("Results/Virtual/NoCorrection",
 map_filenames <- list.files(virtual_folders, recursive = T, full.names = T, pattern = ".tif")
 virtual_stacks <- lapply(virtual_species, function(x) grep(x, map_filenames, value = TRUE))
 virtual_stacks <- lapply(virtual_stacks, stack)
-
-# # Add the probability and suitability stacks to the raster.
-# for (x in 1:50){
-#   name <- paste("prob_random_species_", x, sep="")
-#   virtual_stacks[[x]] <- stack(probability_stack[[name]], virtual_stacks[[x]])
-# }
 
 ##### Reading in empirical species ######
 
@@ -143,9 +136,6 @@ for (x in 1:length(emperical_stacks)){
 }
 dev.off()
 
-
-# library(tools) # Using compression via compact PDF doesn't seem to work.
-# compactPDF("Plots/emperical_distributions.pdf", gs_quality = "screen", gs_cmd = "C:/Program Files/gs/gs9.54.0/bin/gswin64c.exe")
 
 # Virtual Plot labels.
 v_plot_titles <- c("a) Unbiased Occurrences", "b) No Correction", 
@@ -297,14 +287,6 @@ uniform <- raster("Data/Bias Files/Uniform_biasfile.tif")
 
 # Stack the bias files in order.
 bias_files <- stack(sampling_effort, uniform, target_group, distance, population_density, travel_time)
-
-# Create a vector of labels.
-# bias_names <- c("a) Uniform", 
-#                 "b) Sampling Effort",
-#                 "c) Target Group",
-#                 "d) 10km Buffer", 
-#                 "e) Population Density", 
-#                 "f) Travel Time")
 
 # Plot bias files.
 myplot <- levelplot(bias_files, 
