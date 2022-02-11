@@ -114,7 +114,6 @@ virtual_reference <- foreach(x=1:length(virtual_species),
   
     # Create the predicted map of each model.
     map <- predict(model, bio_stack, args=c('outputformat=cloglog'))
-    #map <- raster.transformation(map, trans = "norm")
   
     # Save the map.
     writeRaster(map, paste(file_pathway, "/", model_name, "_map.tif", sep=""), overwrite=TRUE)
@@ -151,7 +150,6 @@ emperical_reference <- foreach(x=1:length(hoverfly_species),
   
     # Create the predicted map of each model.
     map <- predict(model, bio_stack, args=c('outputformat=cloglog'))
-    #map <- raster.transformation(map, trans = "norm")
   
     # Save the map.
     writeRaster(map, paste(file_pathway, "/", model_name, "_map.tif", sep=""), overwrite=TRUE)
@@ -264,7 +262,6 @@ biased_reference <- foreach(x=1:length(virtual_species),
     
     # Create the predicted map of each model.
     map <- predict(model, bio_stack, args=c('outputformat=cloglog'))
-    #map <- raster.transformation(map, trans = "norm")
     
     # Save the map.
     writeRaster(map, paste(file_pathway, "/", model_name, "_map.tif", sep=""), overwrite=TRUE)
@@ -301,7 +298,6 @@ biasfile_reference <- foreach(x=1:length(virtual_species),
     
     # Create the predicted map of each model.
     map <- predict(model, bio_stack, args=c('outputformat=cloglog'))
-    #map <- raster.transformation(map, trans = "norm")
     
     # Save the map.
     writeRaster(map, paste(file_pathway, "/", model_name, "_map.tif", sep=""), overwrite=TRUE)
