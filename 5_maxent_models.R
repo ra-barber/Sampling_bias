@@ -39,11 +39,6 @@ library(biomod2)
 bioclim_filenames <- list.files("Data/Environmental Layers/", full.names = T)
 bio_stack <- stack(lapply(bioclim_filenames, raster))
 
-# # Read in suitability maps.
-# suitab_filenames <- list.files("Data/Virtual/Suitability/", full.names = T)
-# suitability_stack <- stack(lapply(suitab_filenames, raster))
-# 
-
 # Read in over 1000 occurrence data.
 hoverflies <- read.csv("Data/Hoverfly Data/D_ALL_1983_2002.csv")
 hoverfly_species <- unique(hoverflies$Species)
@@ -169,14 +164,6 @@ tictoc::toc()
 # Turn the lists into stacks.
 virtual_stack <- stack(virtual_reference)
 emperical_stack <- stack(emperical_reference)
-
-
-
-# map_filenames <- list.files("Results/Virtual/Unbiased", recursive = T, full.names = T, pattern = ".tif")
-# virtual_stack <- stack(lapply(map_filenames, raster))
-# 
-# map_filenames <- list.files("Results/Emperical/SampleEffort", recursive = T, full.names = T, pattern = ".tif")
-# emperical_stack <- stack(lapply(map_filenames, raster))
 
 
 
