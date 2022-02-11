@@ -133,22 +133,7 @@ for (x in 1:50){
     # Create a name for the random species.
     random_name <- paste("random_species_", x, sep="")
     
-    # Make sure the random species predicted suitability is not excessively small 
-    # as this leads to models that perform poorly regardless of sampling bias, 
-    # and is a poor validation of hoverfly species. Rerun random species if less
-    # than 30% of cells (75000) have a suitability value below 0.5.
-    # area <- 0
-    # while(area < 75000){
-    #   # Generate a random species object.
-    #   random_species <- generateRandomSp(bio_stack, 
-    #                                    species.prevalence = 0.5, 
-    #                                    plot = FALSE, 
-    #                                    niche.breadth = "wide")
-    #   binary_map <- BinaryTransformation(random_species$suitab.raster, 0.5)
-    #   area <- sum(na.omit(values(binary_map)))
-    #  }
-    
-    # Try it this way.
+    # Create a random beta value that's not too low or high.
     beta_value <- runif(1, min=0.3, max=0.7)
     random_species <- generateRandomSp(bio_stack,
                                        beta = beta_value,
@@ -174,11 +159,6 @@ for (x in 1:50){
     # Sample unbiased presence only points.
     PO_points <- sampleOccurrences(random_species, n = 1000, type = "presence only", plot = FALSE)
     
-    # Sample unbiased presence-absence data we can use to test bias corrections.
-    # sample.prevalence means we sample 500 presences and 500 absences.
-    # PA_points <- sampleOccurrences(random_species, n = 1000, type = "presence-absence", 
-    #                                sample.prevalence = 0.5, plot = FALSE)
-    
     # Sample presence only points biased by sampling effort to create a biased dataset to test.
     PO_bias_points <- sampleOccurrences(random_species, n = 1000, type = "presence only",
                                         bias = "manual", weights = sample_raster, plot = FALSE)
@@ -189,10 +169,6 @@ for (x in 1:50){
     
     PO_bias_points <- PO_bias_points$sample.points[,1:2]
     colnames(PO_bias_points) <- c("PO_x_biased", "PO_y_biased")
-    
-    # Should remove because we don't use them.
-    #PA_points <- PA_points$sample.points[,1:3]
-    #colnames(PA_points) <- c("PA_x_unbiased", "PA_y_unbiased", "P_or_A_unbiased")
     
     # Combine occurrences and save each species while looping.
     single_occurences <- cbind(random_name, PO_points, PO_bias_points)
@@ -214,18 +190,3 @@ write.csv(random_species_parameters, "Data/Virtual/Occurrences/random_species_pa
 
 
                         ##### End of Script. #####
-
-# for (x in 1:50){
-#   binary_map <- BinaryTransformation(suitability_stack[[x]], 0.5)
-#   area <- sum(na.omit(values(binary_map)))
-#   print(area)
-# }
-# binary_map <- BinaryTransformation(random_species$suitab.raster, 0.5)
-# area <- sum(na.omit(values(binary_map)))
-# 
-# 
-# suitability_filenames <- list.files("Data/Virtual/Suitability/", full.names = T)
-# suitability_stack <- stack(lapply(suitability_filenames, raster))
-# plot(suitability_stack)
-# plot(random_species_parameters$PA_beta, random_species_parameters$PA_prevalence)
-# 
